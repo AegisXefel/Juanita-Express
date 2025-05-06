@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conductor - Juanita Express</title>
+    <link rel="icon" type="image/png" href="/assets/img/jem.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2196F3;
+            --secondary: #4CAF50;
+            --error: #f44336;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+
+        .mobile-menu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            width: 200px;
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        /* Nuevos estilos para el input DNI */
+        #dniInput {
+            font-size: 1.2em;
+            padding: 15px;
+            max-width: 500px;
+            margin: 15px auto;
+        }
+
+        .contadores {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .contador-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: var(--secondary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .lista-viajes {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .viaje-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+        }
+
+        .viaje-item.mc { background: #e3f2fd; }
+        .viaje-item.cm { background: #f0f4c3; }
+
+        .viaje-detalle {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        input, button, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .delete-btn {
+            background: var(--error);
+            padding: 8px 12px;
+        }
+
+        .pasajero-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .boton-accion {
+            padding: 8px 12px !important;
+            min-width: 40px;
+            font-size: 14px;
+        }
+
+        footer {
+            background: #0f1f3d;
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            margin-top: auto;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mobile-menu">
+            <button onclick="mostrarSeccion('consultas')">
+                <i class="fas fa-users"></i> Pasajeros
+            </button>
+            <button onclick="mostrarSeccion('historial')">
+                <i class="fas fa-history"></i> Historial
+            </button>
+            <button onclick="mostrarSeccion('perfil')">
+                <i class="fas fa-cog"></i> Perfil
+            </button>
+        </div>
+
+        <div id="consultasSection">
+            <img src="/assets/img/empresas/JUANITA.png" alt="Logo" class="header-logo" id="headerLogo">
+            <h2><i class="fas fa-users"></i> Registro de Pasajeros</h2>
+            
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="selectorRuta">
+                    <span class="slider"></span>
+                </label>
+                <span id="rutaTexto">Moquegua a Cuajone</span>
+            </div>
+            
+            <input type="number" id="dniInput" placeholder="DNI/CE (8-9 dígitos)" min="10000000" max="999999999" autocomplete="off">
+            <button onclick="consultarDocumento()"><i class="fas fa-search"></i> Buscar</button>
+            
+            <div id="listaConsultas" style="margin-top: 15px;"></div>
+            <button onclick="imprimirTicket()">
+                <i class="fas fa-print"></i> Generar Ticket
+            </button>
+        </div>
+
+        <div id="historialSection" class="hidden">
+            <h2><i class="fas fa-history"></i> Historial de Viajes</h2>
+            <div class="contadores">
+                <div class="contador-item">
+                    <small>Viajes M→C</small><br>
+                    <span id="contadorMC">0</span>
+                </div>
+                <div class="contador-item">
+                    <small>Viajes C→M</small><br>
+                    <span id="contadorCM">0</span>
+                </div>
+                <div class="contador-item">
+                    <small>Total Viajes</small><br>
+                    <span id="contadorTotal">0</span>
+                </div>
+                <div class="contador-item">
+                    <small>Pasajeros M→C</small><br>
+                    <span id="pasajerosMC">0</span>
+                </div>
+                <div class="contador-item">
+                    <small>Pasajeros C→M</small><br>
+                    <span id="pasajerosCM">0</span>
+                </div>
+                <div class="contador-item">
+                    <small>Total Pasajeros</small><br>
+                    <span id="pasajerosTotal">0</span>
+                </div>
+            </div>
+            <div class="lista-viajes" id="listaViajes"></div>
+            <div class="viaje-detalle" id="detalleViaje"></div>
+        </div>
+
+        <div id="perfilSection" class="hidden">
+            <h2><i class="fas fa-user"></i> Mi Perfil</h2>
+            <input type="text" id="perfilNombre" placeholder="Nombre completo">
+            <input type="number" id="perfilDni" placeholder="DNI">
+            <input type="text" id="perfilLicencia" placeholder="Licencia">
+            <input type="text" id="perfilPlaca" placeholder="Placa">
+            <select id="perfilEmpresa"><option value="">Seleccionar empresa...</option></select>
+            
+            <h3 style="margin-top:20px;"><i class="fas fa-lock"></i> Cambiar Contraseña</h3>
+            <input type="password" id="currentPassword" placeholder="Contraseña actual">
+            <input type="password" id="nuevaPassword" placeholder="Nueva contraseña">
+            <input type="password" id="confirmPassword" placeholder="Confirmar contraseña">
+            
+            <button onclick="guardarPerfil()" style="margin-top:15px;">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+
+        <button onclick="logout()" style="background: var(--error); margin-top: 30px;">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </button>
+    </div>
+
+    <div id="modalManual" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:1000;">
+        <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:400px;">
+            <h3><i class="fas fa-user-edit"></i> Registro Manual</h3>
+            <input type="number" id="inputCarnet" placeholder="N° Documento">
+            <input type="text" id="inputNombre" placeholder="Nombre completo" required oninput="this.value = this.value.toUpperCase()">
+            <input type="date" id="inputFechaNacimiento" required>
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button onclick="guardarManual()"><i class="fas fa-save"></i> Guardar</button>
+                <button onclick="cerrarModal()" style="background:#666"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDO3pmjFE29L11wnroiKG5zzkJe-g5RAzg",
+            authDomain: "juanitaexpress-37e02.firebaseapp.com",
+            databaseURL: "https://juanitaexpress-37e02-default-rtdb.firebaseio.com",
+            projectId: "juanitaexpress-37e02",
+            storageBucket: "juanitaexpress-37e02.appspot.com",
+            messagingSenderId: "299379190774",
+            appId: "1:299379190774:web:3f15f36c1d220f8a82b5d7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const API_KEY = 'cGVydWRldnMucHJvZHVjdGlvbi5maXRjb2RlcnMuNjdmZjA4ZDk5ZmE0MTczZjYxMzIwOTQw';
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+        
+        let consultasRecientes = [];
+        let userData = null;
+        let empresasLista = [];
+        let viajesFiltrados = [];
+
+        if (!userId) window.location.href = 'index.html';
+
+        const calcularEdad = (fecha) => {
+            try {
+                const [dia, mes, anio] = fecha.split('/');
+                const nacimiento = new Date(`${anio}-${mes}-${dia}`);
+                const hoy = new Date();
+                let edad = hoy.getFullYear() - nacimiento.getFullYear();
+                const mesDiff = hoy.getMonth() - nacimiento.getMonth();
+                if (mesDiff < 0 || (mesDiff === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
+                return edad;
+            } catch { return 'N/A'; }
+        };
+
+        const renderizarLista = () => {
+            const lista = document.getElementById('listaConsultas');
+            lista.innerHTML = consultasRecientes.map((pasajero, index) => `
+                <div class="pasajero-item">
+                    <div>
+                        <strong>${pasajero.nombre}</strong><br>
+                        <small>${pasajero.dni} | ${calcularEdad(pasajero.fechaNacimiento)} años</small>
+                    </div>
+                    <div style="display:flex;gap:8px;">
+                        ${!pasajero.guardado ? `
+                            <button class="boton-accion" onclick="guardarDesdeLista(${index})">
+                                <i class="fas fa-save"></i>
+                            </button>` : ''
+                        }
+                        <button class="boton-accion delete-btn" onclick="eliminarDeLista(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        window.guardarDesdeLista = async (index) => {
+            const pasajero = consultasRecientes[index];
+            const datos = { 
+                ...pasajero, 
+                registradoPor: userId, 
+                timestamp: new Date().toISOString(),
+                guardado: true
+            };
+            
+            try {
+                await set(ref(database, `pasajeros/${pasajero.dni}`), datos);
+                consultasRecientes[index].guardado = true;
+                renderizarLista();
+                alert('Pasajero guardado correctamente');
+            } catch (error) { 
+                alert('Error al guardar: ' + error.message); 
+            }
+        };
+
+        window.eliminarDeLista = (index) => {
+            if (confirm('¿Eliminar de la lista?')) {
+                consultasRecientes.splice(index, 1);
+                renderizarLista();
+            }
+        };
+
+        window.consultarDocumento = async () => {
+            const documento = document.getElementById('dniInput').value.trim();
+            document.getElementById('dniInput').value = '';
+            
+            if (documento.length < 8 || documento.length > 9) {
+                return alert('Documento inválido');
+            }
+
+            try {
+                const pasajeroRef = ref(database, `pasajeros/${documento}`);
+                const snapshot = await get(pasajeroRef);
+                
+                if (snapshot.exists()) {
+                    consultasRecientes.push({ ...snapshot.val(), guardado: true });
+                    renderizarLista();
+                    return;
+                }
+                
+                const response = await fetch(`https://api.perudevs.com/api/v1/dni/complete?document=${documento}&key=${API_KEY}`);
+                const dataApi = await response.json();
+                
+                if (dataApi.estado) {
+                    consultasRecientes.push({
+                        dni: dataApi.resultado.id,
+                        nombre: dataApi.resultado.nombre_completo,
+                        fechaNacimiento: dataApi.resultado.fecha_nacimiento,
+                        guardado: false
+                    });
+                    renderizarLista();
+                } else {
+                    document.getElementById('inputCarnet').value = documento;
+                    document.getElementById('modalManual').classList.remove('hidden');
+                }
+            } catch {
+                document.getElementById('inputCarnet').value = documento;
+                document.getElementById('modalManual').classList.remove('hidden');
+            }
+        };
+
+        window.guardarManual = async () => {
+            const fechaInput = document.getElementById('inputFechaNacimiento');
+            const [anio, mes, dia] = fechaInput.value.split('-');
+            const datos = {
+                dni: document.getElementById('inputCarnet').value,
+                nombre: document.getElementById('inputNombre').value.trim(),
+                fechaNacimiento: `${dia}/${mes}/${anio}`,
+                registradoPor: userId,
+                timestamp: new Date().toISOString(),
+                guardado: true
+            };
+            
+            if (!datos.dni || !datos.nombre || !fechaInput.value) {
+                return alert('Complete todos los campos');
+            }
+            
+            try {
+                await set(ref(database, `pasajeros/${datos.dni}`), datos);
+                consultasRecientes.push(datos);
+                renderizarLista();
+                cerrarModal();
+            } catch (error) {
+                alert('Error al guardar: ' + error.message);
+            }
+        };
+
+        window.cerrarModal = () => {
+            document.getElementById('modalManual').classList.add('hidden');
+            document.getElementById('inputNombre').value = '';
+            document.getElementById('inputFechaNacimiento').value = '';
+        };
+
+        window.imprimirTicket = async () => {
+            if (consultasRecientes.length === 0) {
+                return alert('Agregue al menos un pasajero');
+            }
+            
+            const ruta = document.getElementById('selectorRuta').checked ? 
+                        'Cuajone a Moquegua' : 'Moquegua a Cuajone';
+            
+            const viajeData = {
+                ruta,
+                pasajeros: consultasRecientes.map(p => p.dni),
+                conductor: userId,
+                placa: userData.placa,
+                empresa: userData.empresa,
+                timestamp: Date.now()
+            };
+            
+            try {
+                await set(ref(database, `viajes/${viajeData.timestamp}`), viajeData);
+                
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html><head><title>Ticket</title>
+                    <style>
+                        @page { size: auto; margin: 0; }
+                        body { 
+                            font-family: Arial; 
+                            padding: 10px 15px; 
+                            width: 90mm;
+                            font-size: 20px;
+                        }
+                        .encabezado { 
+                            text-align: center; 
+                            margin: 0 auto;
+                            padding-bottom: 8px;
+                            border-bottom: 2px solid #000;
+                        }
+                        .empresa {
+                            font-size: 28px;
+                            font-weight: bold;
+                            margin: 8px 0;
+                        }
+                        .conductor {
+                            font-size: 24px;
+                            margin: 6px 0;
+                        }
+                        .detalles {
+                            font-size: 22px;
+                            margin: 5px 0;
+                            display: flex;
+                            justify-content: center;
+                            gap: 14px;
+                        }
+                        .nombre {
+                            font-size: 22px;
+                            font-weight: bold;
+                            margin: 8px 0 4px;
+                        }
+                        .dni-edad {
+                            display: flex;
+                            justify-content: space-between;
+                            font-size: 20px;
+                            margin: 4px 0 12px;
+                            gap: 20px;
+                        }
+                        .separador {
+                            font-size: 18px;
+                            color: #666;
+                        }
+                    </style></head>
+                    <body>
+                        <div class="encabezado">
+                            <div class="empresa">${userData.empresa}</div>
+                            <div class="conductor">${userData.nombre}</div>
+                            <div class="detalles">
+                                <span>${userData.licencia}</span>
+                                <span class="separador">│</span>
+                                <span>${userData.placa}</span>
+                            </div>
+                            <div class="detalles">
+                                ${new Date().toLocaleString('es-PE', { 
+                                    day: '2-digit', 
+                                    month: '2-digit', 
+                                    year: 'numeric', 
+                                    hour: '2-digit', 
+                                    minute: '2-digit' 
+                                })}
+                            </div>
+                            <div class="detalles" style="font-weight:bold; margin-top:10px;">${ruta}</div>
+                        </div>
+                        
+                        ${consultasRecientes.map(p => `
+                            <div>
+                                <div class="nombre">${p.nombre}</div>
+                                <div class="dni-edad">
+                                    <span>${p.dni.length === 9 ? 'CE' : 'DNI'}: ${p.dni}</span>
+                                    <span>${calcularEdad(p.fechaNacimiento)} años</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </body></html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+                
+                consultasRecientes = [];
+                renderizarLista();
+                
+            } catch (error) {
+                alert('Error al guardar viaje: ' + error.message);
+            }
+        };
+
+        const actualizarContadores = (viajes) => {
+            let contMC = 0, contCM = 0, pasajerosMC = 0, pasajerosCM = 0;
+            
+            viajes.forEach(v => {
+                if(v.ruta === 'Moquegua a Cuajone') {
+                    contMC++;
+                    pasajerosMC += v.pasajeros.length;
+                } else {
+                    contCM++;
+                    pasajerosCM += v.pasajeros.length;
+                }
+            });
+            
+            document.getElementById('contadorMC').textContent = contMC;
+            document.getElementById('contadorCM').textContent = contCM;
+            document.getElementById('contadorTotal').textContent = viajes.length;
+            document.getElementById('pasajerosMC').textContent = pasajerosMC;
+            document.getElementById('pasajerosCM').textContent = pasajerosCM;
+            document.getElementById('pasajerosTotal').textContent = pasajerosMC + pasajerosCM;
+        };
+
+        window.mostrarSeccion = (seccion) => {
+            document.getElementById('consultasSection').classList.toggle('hidden', seccion !== 'consultas');
+            document.getElementById('historialSection').classList.toggle('hidden', seccion !== 'historial');
+            document.getElementById('perfilSection').classList.toggle('hidden', seccion !== 'perfil');
+        };
+
+        window.mostrarDetalleViaje = async (timestamp) => {
+            const viajeRef = ref(database, `viajes/${timestamp}`);
+            const snapshot = await get(viajeRef);
+            
+            if(snapshot.exists()) {
+                const viaje = snapshot.val();
+                const pasajeros = await Promise.all(viaje.pasajeros.map(async dni => {
+                    const pasajeroRef = ref(database, `pasajeros/${dni}`);
+                    const snap = await get(pasajeroRef);
+                    return snap.exists() ? snap.val() : null;
+                }));
+
+                document.getElementById('detalleViaje').innerHTML = `
+                    <h3>Detalle del Viaje</h3>
+                    <p><strong>Fecha:</strong> ${new Date(viaje.timestamp).toLocaleString()}</p>
+                    <p><strong>Ruta:</strong> ${viaje.ruta}</p>
+                    <p><strong>Pasajeros:</strong></p>
+                    <ul>
+                        ${pasajeros.map(p => p ? `
+                            <li>${p.nombre} (${p.dni}) - ${calcularEdad(p.fechaNacimiento)} años</li>
+                        ` : '<li>Pasajero no registrado</li>').join('')}
+                    </ul>
+                    <button onclick="reimprimirTicket('${timestamp}')" class="export-button">
+                        <i class="fas fa-print"></i> Reimprimir Ticket
+                    </button>
+                `;
+            }
+        };
+
+        window.reimprimirTicket = async (timestamp) => {
+            const viajeRef = ref(database, `viajes/${timestamp}`);
+            const snapshot = await get(viajeRef);
+            
+            if(snapshot.exists()) {
+                const viaje = snapshot.val();
+                const pasajeros = await Promise.all(viaje.pasajeros.map(async dni => {
+                    const pasajeroRef = ref(database, `pasajeros/${dni}`);
+                    const snap = await get(pasajeroRef);
+                    return snap.exists() ? snap.val() : null;
+                }));
+
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html><head><title>Ticket ${timestamp}</title>
+                    <style>
+                        @page { size: auto; margin: 0; }
+                        body { 
+                            font-family: Arial; 
+                            padding: 10px 15px; 
+                            width: 90mm;
+                            font-size: 20px;
+                        }
+                        .encabezado { 
+                            text-align: center; 
+                            margin: 0 auto;
+                            padding-bottom: 8px;
+                            border-bottom: 2px solid #000;
+                        }
+                        .empresa {
+                            font-size: 28px;
+                            font-weight: bold;
+                            margin: 8px 0;
+                        }
+                        .conductor {
+                            font-size: 24px;
+                            margin: 6px 0;
+                        }
+                        .detalles {
+                            font-size: 22px;
+                            margin: 5px 0;
+                            display: flex;
+                            justify-content: center;
+                            gap: 14px;
+                        }
+                        .nombre {
+                            font-size: 22px;
+                            font-weight: bold;
+                            margin: 8px 0 4px;
+                        }
+                        .dni-edad {
+                            display: flex;
+                            justify-content: space-between;
+                            font-size: 20px;
+                            margin: 4px 0 12px;
+                            gap: 20px;
+                        }
+                        .separador {
+                            font-size: 18px;
+                            color: #666;
+                        }
+                    </style></head>
+                    <body>
+                        <div class="encabezado">
+                            <div class="empresa">${viaje.empresa}</div>
+                            <div class="conductor">${userData.nombre}</div>
+                            <div class="detalles">
+                                <span>${userData.licencia}</span>
+                                <span class="separador">│</span>
+                                <span>${viaje.placa}</span>
+                            </div>
+                            <div class="detalles">
+                                ${new Date(viaje.timestamp).toLocaleString('es-PE', { 
+                                    day: '2-digit', 
+                                    month: '2-digit', 
+                                    year: 'numeric', 
+                                    hour: '2-digit', 
+                                    minute: '2-digit' 
+                                })}
+                            </div>
+                            <div class="detalles" style="font-weight:bold; margin-top:10px;">${viaje.ruta}</div>
+                        </div>
+                        
+                        ${pasajeros.map(p => p ? `
+                            <div>
+                                <div class="nombre">${p.nombre}</div>
+                                <div class="dni-edad">
+                                    <span>${p.dni.length === 9 ? 'CE' : 'DNI'}: ${p.dni}</span>
+                                    <span>${calcularEdad(p.fechaNacimiento)} años</span>
+                                </div>
+                            </div>
+                        ` : '<div>Pasajero no registrado</div>').join('')}
+                    </body></html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            }
+        };
+
+        const cargarEmpresas = async () => {
+            const empresasRef = ref(database, 'empresas');
+            const snapshot = await get(empresasRef);
+            const select = document.getElementById('perfilEmpresa');
+            select.innerHTML = '<option value="">Seleccionar empresa...</option>';
+            
+            if(snapshot.exists()) {
+                empresasLista = Object.values(snapshot.val());
+                empresasLista.forEach(empresa => {
+                    const option = document.createElement('option');
+                    option.value = empresa.nombre;
+                    option.textContent = empresa.nombre;
+                    if(userData && userData.empresa === empresa.nombre) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            }
+        };
+
+        window.guardarPerfil = async () => {
+            try {
+                const nuevosDatos = {
+                    ...userData,
+                    nombre: document.getElementById('perfilNombre').value.trim(),
+                    dni: document.getElementById('perfilDni').value.trim(),
+                    licencia: document.getElementById('perfilLicencia').value.trim(),
+                    placa: document.getElementById('perfilPlaca').value.trim(),
+                    empresa: document.getElementById('perfilEmpresa').value,
+                    lastUpdate: new Date().toISOString(),
+                };
+
+                const nuevaPassword = document.getElementById('nuevaPassword').value;
+                const confirmPass = document.getElementById('confirmPassword').value;
+                
+                if (nuevaPassword && nuevaPassword === confirmPass) {
+                    nuevosDatos.password = nuevaPassword;
+                }
+
+                await set(ref(database, `usuarios/${userId}`), nuevosDatos);
+                
+                const empresa = empresasLista.find(e => e.nombre === nuevosDatos.empresa);
+                if(empresa) {
+                    document.getElementById('headerLogo').src = empresa.logo + `?t=${Date.now()}`;
+                }
+                
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('nuevaPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                
+                alert('Perfil actualizado correctamente');
+            } catch (error) {
+                alert('Error al guardar: ' + error.message);
+            }
+        };
+
+        window.logout = () => {
+            window.location.href = 'index.html';
+        };
+
+        // Inicialización
+        (async () => {
+            onValue(ref(database, `usuarios/${userId}`), (snapshot) => {
+                userData = snapshot.val();
+                if (userData) {
+                    document.getElementById('perfilNombre').value = userData.nombre || '';
+                    document.getElementById('perfilDni').value = userData.dni || '';
+                    document.getElementById('perfilLicencia').value = userData.licencia || '';
+                    document.getElementById('perfilPlaca').value = userData.placa || '';
+                    
+                    cargarEmpresas().then(() => {
+                        document.getElementById('perfilEmpresa').value = userData.empresa || '';
+                        if(userData.empresa) {
+                            const empresa = empresasLista.find(e => e.nombre === userData.empresa);
+                            if(empresa) {
+                                document.getElementById('headerLogo').src = empresa.logo + `?t=${Date.now()}`;
+                            }
+                        }
+                    });
+                }
+            });
+
+            onValue(ref(database, 'viajes'), (snapshot) => {
+                viajesFiltrados = [];
+                const viajes = snapshot.val() || {};
+                Object.values(viajes).forEach(viaje => {
+                    if (viaje.conductor === userId) {
+                        viajesFiltrados.push(viaje);
+                    }
+                });
+                viajesFiltrados.sort((a, b) => b.timestamp - a.timestamp);
+                actualizarContadores(viajesFiltrados);
+                
+                const lista = document.getElementById('listaViajes');
+                lista.innerHTML = viajesFiltrados.map(v => `
+                    <div class="viaje-item ${v.ruta === 'Moquegua a Cuajone' ? 'mc' : 'cm'}" onclick="mostrarDetalleViaje('${v.timestamp}')">
+                        <div>${new Date(v.timestamp).toLocaleDateString()}</div>
+                        <div>${v.ruta} (${v.pasajeros.length})</div>
+                    </div>
+                `).join('');
+            });
+
+            document.getElementById('selectorRuta').addEventListener('change', function() {
+                document.getElementById('rutaTexto').textContent = this.checked ? 
+                    'Cuajone a Moquegua' : 'Moquegua a Cuajone';
+            });
+        })();
+    </script>
+
+    <footer>
+        <p>© 2025 Juanita Express Multiservice. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

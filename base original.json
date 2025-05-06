@@ -1,0 +1,299 @@
+{
+  "conductores": {
+    "397xuOfZwbY4UA1AqrotmpQJaFp1": {
+      "dni": "12345678",
+      "empresa": "Transervice SAC",
+      "lastUpdate": "2025-04-19T13:56:06.347Z",
+      "licencia": "A-12345678",
+      "nombre": "Admin Pasajeros",
+      "placa": "AAA-123"
+    },
+    "CauV0jONMRVnQPaNIjScsFnl8Yi1": {
+      "dni": "00415263",
+      "empresa": "Transportes JEM",
+      "lastUpdate": "2025-04-19T07:54:08.304Z",
+      "licencia": "K-00415263",
+      "nombre": "Aegis Xefel",
+      "placa": "Z7B-546"
+    },
+    "R9UoQTaIJSVWnTRqOr7913U9kGz1": {
+      "dni": "48171837",
+      "empresa": "Transervice SAC",
+      "lastUpdate": "2025-04-23T21:16:40.280Z",
+      "licencia": "K-48171837",
+      "nombre": "Brayan Luck Flores Mancilla",
+      "placa": "Z6Z-539"
+    },
+    "p0FM87xwqYdWR1GWrb7DrQSxken1": {
+      "dni": "01234567",
+      "empresa": "Transportes JEM",
+      "lastUpdate": "2025-04-19T07:54:08.304Z",
+      "licencia": "A-012345673",
+      "nombre": "AUDITOR",
+      "placa": "ZBC-123"
+    }
+  },
+  "empresas": {
+    "-Nempresa1": {
+      "logo": "/assets/img/empresas/logo1.png",
+      "nombre": "Transportes JEM",
+      "ruc": "20123456789"
+    },
+    "-Nempresa2": {
+      "logo": "/assets/img/empresas/logo2.png",
+      "nombre": "Carga Rápida SAC",
+      "ruc": "20234567890"
+    },
+    "-Nempresa3": {
+      "logo": "/assets/img/empresas/logo3.png",
+      "nombre": "Transervice SAC",
+      "ruc": "20234567784"
+    }
+  },
+  "pasajeros": {
+    "29354325": {
+      "dni": "29354325",
+      "fechaNacimiento": "27/11/1973",
+      "guardado": false,
+      "nombre": "BERTHA CAROLINA PUMA VILLANUEVA",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-20T15:49:46.687Z"
+    },
+    "29619697": {
+      "dni": "29619697",
+      "fechaNacimiento": "13/09/1974",
+      "nombre": "URLICHS JESUS FLORES LUNA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T19:30:58.512Z"
+    },
+    "29664244": {
+      "dni": "29664244",
+      "fechaNacimiento": "10/11/1975",
+      "nombre": "JORGE ENRIQUE APAZA MEZA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-17T22:37:20.156Z"
+    },
+    "30846338": {
+      "dni": "30846338",
+      "fechaNacimiento": "17/07/1969",
+      "guardado": false,
+      "nombre": "SAMUEL MARCIAL GUILLEN AMPUERO",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T01:07:03.879Z"
+    },
+    "40635415": {
+      "dni": "40635415",
+      "fechaNacimiento": "11/08/1980",
+      "guardado": false,
+      "nombre": "RUTH MARLENE CHOQUEPATA PORTILLO",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T01:07:32.199Z"
+    },
+    "41779260": {
+      "dni": "41779260",
+      "fechaNacimiento": "25/05/1983",
+      "guardado": false,
+      "nombre": "GUBER EDGAR MAMANI QUISPE",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-21T21:58:17.892Z"
+    },
+    "44169630": {
+      "dni": "44169630",
+      "fechaNacimiento": "12/08/1986",
+      "guardado": false,
+      "nombre": "JIMMY ASUNCION APAZA ARPASI",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-25T09:10:31.606Z"
+    },
+    "44183372": {
+      "dni": "44183372",
+      "fechaNacimiento": "07/03/1987",
+      "nombre": "EDER ARMANDO MAMANI QUISPE",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T20:41:45.678Z"
+    },
+    "44245196": {
+      "dni": "44245196",
+      "fechaNacimiento": "01/05/1987",
+      "nombre": "ISMAEL JOSE RAMOS ZABALAGA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-17T22:40:16.152Z"
+    },
+    "46714625": {
+      "dni": "46714625",
+      "fechaNacimiento": "16/12/1990",
+      "nombre": "JULIO JAVIER PARI APAZA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-17T22:17:31.101Z"
+    },
+    "48171837": {
+      "dni": "48171837",
+      "fechaNacimiento": "04/01/1994",
+      "nombre": "BRAYAN LUCK FLORES MANCILLA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T10:31:16.123Z"
+    },
+    "70370318": {
+      "dni": "70370318",
+      "fechaNacimiento": "12/01/1993",
+      "guardado": false,
+      "nombre": "YNGRID FLORES ZAPANA",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T00:39:10.872Z"
+    },
+    "71892786": {
+      "dni": "71892786",
+      "fechaNacimiento": "20/08/1995",
+      "nombre": "KAREN SOFIA SUCAPUCA PACARA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T19:53:22.223Z"
+    },
+    "72351206": {
+      "dni": "72351206",
+      "fechaNacimiento": "17/09/2000",
+      "guardado": false,
+      "nombre": "MONICA SHAMELIN IBAÑEZ MAURI",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T01:07:03.393Z"
+    },
+    "72363333": {
+      "dni": "72363333",
+      "fechaNacimiento": "21/07/1999",
+      "nombre": "MAGALY STEFANY RAMOS CHAMBI",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T18:57:20.813Z"
+    },
+    "72363338": {
+      "dni": "72363338",
+      "fechaNacimiento": "03/11/1997",
+      "nombre": "HENRY  FERNANDO RAMOS CHAMBI",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T19:32:18.468Z"
+    },
+    "73393499": {
+      "dni": "73393499",
+      "fechaNacimiento": "18/07/1994",
+      "nombre": "YOSSELIN KARLA MORANTE ORMEÑO",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T20:47:30.692Z"
+    },
+    "74319506": {
+      "dni": "74319506",
+      "fechaNacimiento": "16/04/2001",
+      "guardado": false,
+      "nombre": "PABLO CESAR POMA ARRATEA",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T02:57:35.512Z"
+    },
+    "77816306": {
+      "dni": "77816306",
+      "fechaNacimiento": "05/09/1996",
+      "nombre": "LENNY ARACELI RIOS CHARCA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T17:22:35.564Z"
+    },
+    "92584769": {
+      "dni": "92584769",
+      "fechaNacimiento": "05/04/1998",
+      "guardado": true,
+      "nombre": "PRUEBA FEW",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-19T04:26:48.726Z"
+    },
+    "123456789": {
+      "dni": "123456789",
+      "fechaNacimiento": "05/12/1994",
+      "guardado": true,
+      "nombre": "IVAN IBA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-19T03:51:12.184Z"
+    },
+    "147258369": {
+      "dni": "147258369",
+      "fechaNacimiento": "15/02/1995",
+      "guardado": true,
+      "nombre": "PRUEBA",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-29T14:22:06.841Z"
+    },
+    "369258147": {
+      "dni": "369258147",
+      "fechaNacimiento": "05/08/1998",
+      "guardado": true,
+      "nombre": "DANIEL IBARRA",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-20T14:19:07.167Z"
+    },
+    "00014750": {
+      "dni": "00014750",
+      "fechaNacimiento": "24/10/1949",
+      "guardado": false,
+      "nombre": "MARIA LUZ VALDIVIA LOMAS",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T01:07:02.927Z"
+    },
+    "00515179": {
+      "dni": "00515179",
+      "fechaNacimiento": "20/09/1971",
+      "guardado": false,
+      "nombre": "HAYDEE MANCILLA CALIZAYA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-18T04:27:38.774Z"
+    },
+    "00515180": {
+      "dni": "00515180",
+      "fechaNacimiento": "26/12/1969",
+      "nombre": "ELVIS JESUS FLORES ESQUIA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-17T18:18:22.604Z"
+    },
+    "04408698": {
+      "dni": "04408698",
+      "fechaNacimiento": "01/02/1960",
+      "guardado": false,
+      "nombre": "CECILIO FELIPE NINA RAMOS",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-24T00:39:11.697Z"
+    },
+    "04427370": {
+      "dni": "04427370",
+      "fechaNacimiento": "24/12/1957",
+      "guardado": false,
+      "nombre": "VICENTE MANUEL NINA VELASQUEZ",
+      "registradoPor": "R9UoQTaIJSVWnTRqOr7913U9kGz1",
+      "timestamp": "2025-04-20T15:46:24.140Z"
+    },
+    "04428296": {
+      "dni": "04428296",
+      "fechaNacimiento": "13/03/1964",
+      "nombre": "ELADIO TEODORICO FABIAN VERGARA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T16:52:10.983Z"
+    },
+    "04432820": {
+      "dni": "04432820",
+      "fechaNacimiento": "02/12/1968",
+      "nombre": "SHIRLEY VALMI GONZALES CABANA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-16T16:53:41.066Z"
+    },
+    "004887306": {
+      "dni": "004887306",
+      "fechaNacimiento": "30/07/1986",
+      "guardado": true,
+      "nombre": "IVAN ALEJANDRO IBARRA",
+      "registradoPor": "933625819@jem.com",
+      "timestamp": "2025-04-17T22:41:20.463Z"
+    }
+  },
+  "usuarios": {
+    "397xuOfZwbY4UA1AqrotmpQJaFp1": {
+      "email": "01041994@jem.com",
+      "rol": "superadmin"
+    },
+    "p0FM87xwqYdWR1GWrb7DrQSxken1": {
+      "email": "20250101@jem.com",
+      "rol": "auditor"
+    }
+  }
+}

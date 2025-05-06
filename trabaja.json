@@ -1,0 +1,625 @@
+{
+  "empresas": {
+    "-Nempresa2": {
+      "logo": "https://i.ibb.co/LdJNwsDs/IMG-20240611-WA0068.jpg",
+      "nombre": "EL RAPIDO S.A.",
+      "ruc": "20234567890"
+    },
+    "-Nempresa3": {
+      "logo": "https://i.ibb.co/fgDNK5z/logo3.jpg",
+      "nombre": "Transervice SAC",
+      "ruc": "20234567784"
+    },
+    "-OPMnQVKhkp7OgSn-MIp": {
+      "logo": "https://i.ibb.co/5XTWsdz3/logo4.jpg",
+      "nombre": "EXPRESO ORION",
+      "ruc": "20362978247"
+    },
+    "-OPNL0CvbB1PYJ2Dbq9D": {
+      "logo": "https://i.ibb.co/Qv2cBNDP/logo1.jpg",
+      "nombre": "alas",
+      "ruc": "20123456789"
+    }
+  },
+  "pasajeros": {
+    "29354325": {
+      "dni": "29354325",
+      "fechaNacimiento": "27/11/1973",
+      "guardado": false,
+      "nombre": "BERTHA CAROLINA PUMA VILLANUEVA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-20T15:49:46.687Z"
+    },
+    "29619697": {
+      "dni": "29619697",
+      "fechaNacimiento": "13/09/1974",
+      "nombre": "URLICHS JESUS FLORES LUNA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T19:30:58.512Z"
+    },
+    "29664244": {
+      "dni": "29664244",
+      "fechaNacimiento": "10/11/1975",
+      "nombre": "JORGE ENRIQUE APAZA MEZA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-17T22:37:20.156Z"
+    },
+    "30846338": {
+      "dni": "30846338",
+      "fechaNacimiento": "17/07/1969",
+      "guardado": false,
+      "nombre": "SAMUEL MARCIAL GUILLEN AMPUERO",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T01:07:03.879Z"
+    },
+    "40635415": {
+      "dni": "40635415",
+      "fechaNacimiento": "11/08/1980",
+      "guardado": false,
+      "nombre": "RUTH MARLENE CHOQUEPATA PORTILLO",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T01:07:32.199Z"
+    },
+    "41779260": {
+      "dni": "41779260",
+      "fechaNacimiento": "25/05/1983",
+      "guardado": false,
+      "nombre": "GUBER EDGAR MAMANI QUISPE",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-21T21:58:17.892Z"
+    },
+    "44169630": {
+      "dni": "44169630",
+      "fechaNacimiento": "12/08/1986",
+      "guardado": false,
+      "nombre": "JIMMY ASUNCION APAZA ARPASI",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-25T09:10:31.606Z"
+    },
+    "44183372": {
+      "dni": "44183372",
+      "fechaNacimiento": "07/03/1987",
+      "nombre": "EDER ARMANDO MAMANI QUISPE",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T20:41:45.678Z"
+    },
+    "44245196": {
+      "dni": "44245196",
+      "fechaNacimiento": "01/05/1987",
+      "nombre": "ISMAEL JOSE RAMOS ZABALAGA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-17T22:40:16.152Z"
+    },
+    "46714625": {
+      "dni": "46714625",
+      "fechaNacimiento": "16/12/1990",
+      "nombre": "JULIO JAVIER PARI APAZA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-17T22:17:31.101Z"
+    },
+    "48171837": {
+      "dni": "48171837",
+      "fechaNacimiento": "04/01/1994",
+      "guardado": true,
+      "nombre": "BRAYAN LUCK FLORES MANCILLA",
+      "registradoPor": "superadmin",
+      "timestamp": "2025-05-03T22:45:02.202Z"
+    },
+    "70370318": {
+      "dni": "70370318",
+      "fechaNacimiento": "12/01/1993",
+      "guardado": false,
+      "nombre": "YNGRID FLORES ZAPANA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T00:39:10.872Z"
+    },
+    "71892786": {
+      "dni": "71892786",
+      "fechaNacimiento": "20/08/1995",
+      "nombre": "KAREN SOFIA SUCAPUCA PACARA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T19:53:22.223Z"
+    },
+    "72351206": {
+      "dni": "72351206",
+      "fechaNacimiento": "17/09/2000",
+      "guardado": false,
+      "nombre": "MONICA SHAMELIN IBAÑEZ MAURI",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T01:07:03.393Z"
+    },
+    "72363333": {
+      "dni": "72363333",
+      "fechaNacimiento": "21/07/1999",
+      "nombre": "MAGALY STEFANY RAMOS CHAMBI",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T18:57:20.813Z"
+    },
+    "72363338": {
+      "dni": "72363338",
+      "fechaNacimiento": "03/11/1997",
+      "nombre": "HENRY  FERNANDO RAMOS CHAMBI",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T19:32:18.468Z"
+    },
+    "72363362": {
+      "dni": "72363362",
+      "fechaNacimiento": "16/12/1998",
+      "guardado": true,
+      "nombre": "ABIGAIL DALILA BAUTISTA INUMA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-05-04T15:54:06.855Z"
+    },
+    "73363333": {
+      "dni": "73363333",
+      "fechaNacimiento": "07/11/2004",
+      "guardado": true,
+      "nombre": "ANDERSON OMAR ROJAS GALARZA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-05-03T20:30:29.216Z"
+    },
+    "73393499": {
+      "dni": "73393499",
+      "fechaNacimiento": "18/07/1994",
+      "nombre": "YOSSELIN KARLA MORANTE ORMEÑO",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T20:47:30.692Z"
+    },
+    "74319506": {
+      "dni": "74319506",
+      "fechaNacimiento": "16/04/2001",
+      "guardado": false,
+      "nombre": "PABLO CESAR POMA ARRATEA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T02:57:35.512Z"
+    },
+    "77816306": {
+      "dni": "77816306",
+      "fechaNacimiento": "05/09/1996",
+      "nombre": "LENNY ARACELI RIOS CHARCA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T17:22:35.564Z"
+    },
+    "00014750": {
+      "dni": "00014750",
+      "fechaNacimiento": "24/10/1949",
+      "guardado": false,
+      "nombre": "MARIA LUZ VALDIVIA LOMAS",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T01:07:02.927Z"
+    },
+    "00515179": {
+      "dni": "00515179",
+      "fechaNacimiento": "20/09/1971",
+      "guardado": false,
+      "nombre": "HAYDEE MANCILLA CALIZAYA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-18T04:27:38.774Z"
+    },
+    "00515180": {
+      "dni": "00515180",
+      "fechaNacimiento": "26/12/1969",
+      "nombre": "ELVIS JESUS FLORES ESQUIA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-17T18:18:22.604Z"
+    },
+    "04408698": {
+      "dni": "04408698",
+      "fechaNacimiento": "01/02/1960",
+      "guardado": false,
+      "nombre": "CECILIO FELIPE NINA RAMOS",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-24T00:39:11.697Z"
+    },
+    "04427370": {
+      "dni": "04427370",
+      "fechaNacimiento": "24/12/1957",
+      "guardado": false,
+      "nombre": "VICENTE MANUEL NINA VELASQUEZ",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-20T15:46:24.140Z"
+    },
+    "04428296": {
+      "dni": "04428296",
+      "fechaNacimiento": "13/03/1964",
+      "nombre": "ELADIO TEODORICO FABIAN VERGARA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T16:52:10.983Z"
+    },
+    "04432820": {
+      "dni": "04432820",
+      "fechaNacimiento": "02/12/1968",
+      "nombre": "SHIRLEY VALMI GONZALES CABANA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-16T16:53:41.066Z"
+    },
+    "004887306": {
+      "dni": "004887306",
+      "fechaNacimiento": "30/07/1986",
+      "guardado": true,
+      "nombre": "IVAN ALEJANDRO IBARRA",
+      "registradoPor": "933625819",
+      "timestamp": "2025-04-17T22:41:20.463Z"
+    }
+  },
+  "usuarios": {
+    "123456789": {
+      "dni": "12345678",
+      "email": "123456789@jem.com",
+      "empresa": "Transportes JEM",
+      "lastUpdate": "2025-04-19T07:54:08.304Z",
+      "licencia": "K-00415263",
+      "nombre": "Aegis Xefel",
+      "password": "12345678",
+      "placa": "Z7B-546",
+      "rol": "auditor"
+    },
+    "916817440": {
+      "dni": "72363333",
+      "email": "916817440@jem.com",
+      "empresa": "EXPRESO ORION",
+      "lastUpdate": "2025-05-04T19:48:24.626Z",
+      "licencia": "K-72363333",
+      "nombre": "Magaly Stefany Ramos Chambi",
+      "password": "72363333",
+      "placa": "Z6Z-537",
+      "rol": "conductor"
+    },
+    "933625819": {
+      "dni": "48171837",
+      "email": "933625819@jem.com",
+      "empresa": "EXPRESO ORION",
+      "lastUpdate": "2025-05-04T15:57:11.954Z",
+      "licencia": "K-48171837",
+      "nombre": "Brayan Luck Flores Mancilla",
+      "password": "48171837",
+      "placa": "Z6Z-539",
+      "rol": "conductor"
+    },
+    "962122857": {
+      "dni": "87654321",
+      "email": "962122857@jem.com",
+      "empresa": "Transervice SAC",
+      "lastUpdate": "2025-04-19T13:56:06.347Z",
+      "licencia": "A-87654321",
+      "nombre": "Admin Pasajeros",
+      "password": "87654321",
+      "placa": "AAA-123",
+      "rol": "admin"
+    }
+  },
+  "viajes": {
+    "1746143270848": {
+      "conductor": "933625819",
+      "empresa": "Transervice SAC",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746143270848
+    },
+    "1746143325026": {
+      "conductor": "933625819",
+      "empresa": "Transervice SAC",
+      "pasajeros": [
+        "48171837",
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746143325026
+    },
+    "1746216098853": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837",
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746216098853
+    },
+    "1746218172164": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837",
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746218172164
+    },
+    "1746218447182": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746218447182
+    },
+    "1746218460067": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746218460067
+    },
+    "1746224915221": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746224915221
+    },
+    "1746224931034": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746224931034
+    },
+    "1746225113608": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "00515180"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746225113608
+    },
+    "1746228808332": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837",
+        "98653241"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746228808332
+    },
+    "1746229637630": {
+      "conductor": "933625819",
+      "empresa": "Transervice SAC",
+      "pasajeros": [
+        "48171837",
+        "72363333",
+        "00515180",
+        "00515179"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746229637630
+    },
+    "1746240540301": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746240540301
+    },
+    "1746241773305": {
+      "conductor": "933625819",
+      "empresa": "Transervice SAC",
+      "pasajeros": [
+        "48171837",
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746241773305
+    },
+    "1746242045189": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "123456789"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746242045189
+    },
+    "1746242881444": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "123456789"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746242881444
+    },
+    "1746291833633": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746291833633
+    },
+    "1746292368356": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837",
+        "72363333",
+        "96325874"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746292368356
+    },
+    "1746295543056": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746295543056
+    },
+    "1746296997231": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837",
+        "00515180"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746296997231
+    },
+    "1746297022372": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "321654987"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746297022372
+    },
+    "1746298230850": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "00515180"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746298230850
+    },
+    "1746298241076": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "00515179"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746298241076
+    },
+    "1746298272378": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "00515180"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746298272378
+    },
+    "1746307471092": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746307471092
+    },
+    "1746363792691": {
+      "conductor": "933625819",
+      "empresa": "Transportes JEM",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746363792691
+    },
+    "1746364292399": {
+      "conductor": "933625819",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746364292399
+    },
+    "1746364305331": {
+      "conductor": "933625819",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "72363333"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746364305331
+    },
+    "1746364330734": {
+      "conductor": "933625819",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "123456789"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746364330734
+    },
+    "1746374119163": {
+      "conductor": "933625819",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "48171837",
+        "72363362"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746374119163
+    },
+    "1746374136583": {
+      "conductor": "933625819",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-539",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746374136583
+    },
+    "1746388057880": {
+      "conductor": "916817440",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-537",
+      "ruta": "Moquegua a Cuajone",
+      "timestamp": 1746388057880
+    },
+    "1746388080287": {
+      "conductor": "916817440",
+      "empresa": "EXPRESO ORION",
+      "pasajeros": [
+        "48171837"
+      ],
+      "placa": "Z6Z-537",
+      "ruta": "Cuajone a Moquegua",
+      "timestamp": 1746388080287
+    }
+  }
+}

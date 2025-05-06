@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Juanita Express</title>
+    <link rel="icon" type="image/png" href="/assets/img/jem.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2196F3;
+            --secondary: #4CAF50;
+            --error: #f44336;
+            --warning: #ff9800;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .brand-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .admin-menu {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .admin-menu button {
+            padding: 8px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crud-section {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .crud-section.active {
+            display: block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            min-height: 55vh;
+        }
+
+        .lista-datos {
+            height: 45vh;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .item-lista {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 6px 0;
+            background: #f8f9fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .formulario-edicion {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .formulario-edicion h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            font-size: 0.9em;
+        }
+
+        .btn-editar {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: var(--error);
+            color: white;
+        }
+
+        .detalle-viaje {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            height: 45vh;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .detalle-viaje h3 {
+            margin-top: 0;
+        }
+
+        .filtros-viajes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: #0f1f3d;
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            margin-top: auto;
+            font-size: 0.9rem;
+            width: calc(100% - 30px);
+            margin-left: 15px;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+
+        .logout-btn {
+            background: var(--error);
+            color: white;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-menu {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .brand {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .filtros-viajes {
+                grid-template-columns: 1fr;
+            }
+            
+            .lista-datos, .detalle-viaje {
+                height: 40vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <div class="brand">
+                <img src="/assets/img/titulo.png" alt="Logo" class="brand-logo">
+                <h1 style="margin:0; flex:1; text-align:center"><i class="fas fa-user-shield"></i> Panel Administrador</h1>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-power-off"></i> Cerrar Sesión
+            </button>
+        </div>
+
+        <div class="admin-menu">
+            <button onclick="mostrarSeccion('empresas')"><i class="fas fa-building"></i> Empresas</button>
+            <button onclick="mostrarSeccion('conductores')"><i class="fas fa-users-cog"></i> Conductores</button>
+            <button onclick="mostrarSeccion('pasajeros')"><i class="fas fa-users"></i> Pasajeros</button>
+            <button onclick="mostrarSeccion('viajes')"><i class="fas fa-route"></i> Viajes</button>
+        </div>
+
+        <!-- Sección Empresas -->
+        <div id="empresas" class="crud-section active">
+            <div class="grid-container">
+                <div class="lista-datos" id="listaEmpresas"></div>
+                <div class="formulario-edicion">
+                    <h3><i class="fas fa-edit"></i> Gestión de Empresas</h3>
+                    <input type="text" id="empresaId" hidden>
+                    <input type="text" id="nombreEmpresa" placeholder="Nombre de la empresa" required>
+                    <input type="text" id="rucEmpresa" placeholder="RUC (11 dígitos)" pattern="\d{11}" required>
+                    <input type="url" id="logoEmpresa" placeholder="URL del logo" required>
+                    <div class="acciones">
+                        <button onclick="guardarEmpresa()" style="background: var(--secondary);"><i class="fas fa-save"></i> Guardar</button>
+                        <button onclick="limpiarFormularioEmpresa()" class="btn-editar"><i class="fas fa-undo"></i> Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Conductores -->
+        <div id="conductores" class="crud-section">
+            <div class="grid-container">
+                <div class="lista-datos" id="listaConductores"></div>
+                <div class="formulario-edicion">
+                    <h3><i class="fas fa-user-edit"></i> Gestión de Conductores</h3>
+                    <input type="text" id="conductorId" placeholder="ID (9 dígitos)" required>
+                    <input type="text" id="nombreConductor" placeholder="Nombre completo" required>
+                    <input type="number" id="dniConductor" placeholder="DNI (8 dígitos)" required>
+                    <input type="text" id="licenciaConductor" placeholder="Licencia" required>
+                    <input type="text" id="placaConductor" placeholder="Placa" required>
+                    <select id="empresaConductor" required></select>
+                    <div class="acciones">
+                        <button onclick="guardarConductor()" style="background: var(--secondary);"><i class="fas fa-save"></i> Guardar</button>
+                        <button onclick="limpiarFormularioConductor()" class="btn-editar"><i class="fas fa-undo"></i> Limpiar</button>
+                        <button id="btnResetPassword" class="btn-editar" style="display:none;" onclick="resetearPassword()"><i class="fas fa-key"></i> Resetear Pass</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Pasajeros -->
+        <div id="pasajeros" class="crud-section">
+            <div class="grid-container">
+                <div class="lista-datos" id="listaPasajeros"></div>
+                <div class="formulario-edicion">
+                    <h3><i class="fas fa-user-plus"></i> Gestión de Pasajeros</h3>
+                    <input type="text" id="pasajeroId" hidden>
+                    <input type="number" id="dniPasajero" placeholder="DNI/CE" required>
+                    <input type="text" id="nombrePasajero" placeholder="Nombre completo" required>
+                    <input type="date" id="fechaNacimiento" required>
+                    <div class="acciones">
+                        <button onclick="guardarPasajero()" style="background: var(--secondary);"><i class="fas fa-save"></i> Guardar</button>
+                        <button onclick="limpiarFormularioPasajero()" class="btn-editar"><i class="fas fa-undo"></i> Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Viajes -->
+        <div id="viajes" class="crud-section">
+            <div class="filtros-viajes">
+                <input type="date" id="filtroFechaInicio" onchange="aplicarFiltrosViajes()">
+                <input type="date" id="filtroFechaFin" onchange="aplicarFiltrosViajes()">
+                <select id="filtroRuta" onchange="aplicarFiltrosViajes()">
+                    <option value="">Todas las rutas</option>
+                    <option value="Moquegua a Cuajone">Moquegua a Cuajone</option>
+                    <option value="Cuajone a Moquegua">Cuajone a Moquegua</option>
+                </select>
+                <select id="filtroConductor" onchange="aplicarFiltrosViajes()"></select>
+            </div>
+            <div class="grid-container">
+                <div class="lista-datos" id="listaViajes"></div>
+                <div class="detalle-viaje" id="detalleViaje"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getDatabase, ref, onValue, set, remove, get, push } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDO3pmjFE29L11wnroiKG5zzkJe-g5RAzg",
+            authDomain: "juanitaexpress-37e02.firebaseapp.com",
+            databaseURL: "https://juanitaexpress-37e02-default-rtdb.firebaseio.com",
+            projectId: "juanitaexpress-37e02",
+            storageBucket: "juanitaexpress-37e02.firebasestorage.app",
+            messagingSenderId: "299379190774",
+            appId: "1:299379190774:web:3f15f36c1d220f8a82b5d7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+
+        let empresas = [];
+        let conductores = [];
+        let pasajerosData = {};
+        let viajesData = [];
+
+        window.mostrarSeccion = (seccion) => {
+            document.querySelectorAll('.crud-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(seccion).classList.add('active');
+        };
+
+        // Sección Empresas
+        const cargarEmpresas = () => {
+            onValue(ref(database, 'empresas'), (snap) => {
+                empresas = Object.entries(snap.val() || {});
+                actualizarListaEmpresas();
+                actualizarSelectEmpresas();
+            });
+        };
+
+        const actualizarListaEmpresas = () => {
+            const lista = document.getElementById('listaEmpresas');
+            lista.innerHTML = empresas.map(([key, emp]) => `
+                <div class="item-lista" onclick="editarEmpresa('${key}')">
+                    <div>
+                        <img src="${emp.logo}" width="50" style="margin-right:15px;">
+                        <strong>${emp.nombre}</strong><br>
+                        <small>RUC: ${emp.ruc}</small>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarEmpresa('${key}')"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        };
+
+        window.editarEmpresa = (key) => {
+            const empresa = empresas.find(e => e[0] === key)[1];
+            document.getElementById('empresaId').value = key;
+            document.getElementById('nombreEmpresa').value = empresa.nombre;
+            document.getElementById('rucEmpresa').value = empresa.ruc;
+            document.getElementById('logoEmpresa').value = empresa.logo;
+        };
+
+        window.guardarEmpresa = async () => {
+            const empresa = {
+                nombre: document.getElementById('nombreEmpresa').value.trim(),
+                ruc: document.getElementById('rucEmpresa').value.trim(),
+                logo: document.getElementById('logoEmpresa').value
+            };
+
+            if (!empresa.nombre || !empresa.ruc || !empresa.logo) return alert('Complete todos los campos');
+
+            try {
+                const key = document.getElementById('empresaId').value;
+                const refEmpresa = key ? ref(database, `empresas/${key}`) : ref(database, `empresas/${push(ref(database, 'empresas')).key}`);
+                await set(refEmpresa, empresa);
+                limpiarFormularioEmpresa();
+                alert('Empresa guardada exitosamente');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        };
+
+        window.eliminarEmpresa = (key) => {
+            if (confirm('¿Eliminar empresa permanentemente?')) remove(ref(database, `empresas/${key}`));
+        };
+
+        window.limpiarFormularioEmpresa = () => {
+            document.getElementById('empresaId').value = '';
+            document.getElementById('nombreEmpresa').value = '';
+            document.getElementById('rucEmpresa').value = '';
+            document.getElementById('logoEmpresa').value = '';
+        };
+
+        // Sección Conductores
+        const cargarConductores = () => {
+            onValue(ref(database, 'usuarios'), (snap) => {
+                conductores = Object.entries(snap.val() || {}).filter(([_, u]) => u.rol === 'conductor');
+                actualizarListaConductores();
+                actualizarFiltroConductores();
+            });
+        };
+
+        const actualizarListaConductores = () => {
+            const lista = document.getElementById('listaConductores');
+            lista.innerHTML = conductores.map(([key, cond]) => `
+                <div class="item-lista" onclick="editarConductor('${key}')">
+                    <div>
+                        <strong>${cond.nombre}</strong><br>
+                        <small>${cond.licencia} | ${cond.placa} | ${cond.empresa}</small>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarConductor('${key}')"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        };
+
+        window.editarConductor = (key) => {
+            const conductor = conductores.find(c => c[0] === key)[1];
+            document.getElementById('conductorId').value = key;
+            document.getElementById('nombreConductor').value = conductor.nombre;
+            document.getElementById('dniConductor').value = conductor.dni;
+            document.getElementById('licenciaConductor').value = conductor.licencia;
+            document.getElementById('placaConductor').value = conductor.placa;
+            document.getElementById('empresaConductor').value = conductor.empresa;
+            document.getElementById('btnResetPassword').style.display = 'inline-block';
+        };
+
+        window.guardarConductor = async () => {
+            const id = document.getElementById('conductorId').value.trim();
+            const nombre = document.getElementById('nombreConductor').value.trim();
+            const dni = document.getElementById('dniConductor').value.trim();
+            const licencia = document.getElementById('licenciaConductor').value.trim();
+            const placa = document.getElementById('placaConductor').value.trim();
+            const empresa = document.getElementById('empresaConductor').value;
+
+            if (!id || !nombre || !dni || !licencia || !placa || !empresa) return alert('Complete todos los campos');
+
+            try {
+                await set(ref(database, `usuarios/${id}`), {
+                    dni,
+                    nombre,
+                    licencia,
+                    placa,
+                    empresa,
+                    password: dni,
+                    email: `${id}@jem.com`,
+                    rol: 'conductor',
+                    lastUpdate: new Date().toISOString()
+                });
+                
+                limpiarFormularioConductor();
+                alert('Conductor guardado exitosamente');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        };
+
+        window.resetearPassword = async () => {
+            const id = document.getElementById('conductorId').value.trim();
+            const dni = document.getElementById('dniConductor').value.trim();
+            
+            if (!id || !dni) return alert('Primero seleccione un conductor');
+
+            try {
+                await set(ref(database, `usuarios/${id}/password`), dni);
+                alert('Contraseña restablecida a DNI');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        };
+
+        window.eliminarConductor = async (key) => {
+            if (confirm('¿Eliminar conductor permanentemente?')) {
+                await remove(ref(database, `usuarios/${key}`));
+            }
+        };
+
+        window.limpiarFormularioConductor = () => {
+            document.getElementById('conductorId').value = '';
+            document.getElementById('nombreConductor').value = '';
+            document.getElementById('dniConductor').value = '';
+            document.getElementById('licenciaConductor').value = '';
+            document.getElementById('placaConductor').value = '';
+            document.getElementById('empresaConductor').value = '';
+            document.getElementById('btnResetPassword').style.display = 'none';
+        };
+
+        // Sección Pasajeros
+        const cargarPasajeros = () => {
+            onValue(ref(database, 'pasajeros'), (snap) => {
+                pasajerosData = snap.val() || {};
+                actualizarListaPasajeros();
+            });
+        };
+
+        const calcularEdad = (fecha) => {
+            const [dia, mes, anio] = fecha.split('/');
+            return new Date().getFullYear() - new Date(`${anio}-${mes}-${dia}`).getFullYear();
+        };
+
+        const actualizarListaPasajeros = () => {
+            const lista = document.getElementById('listaPasajeros');
+            lista.innerHTML = Object.entries(pasajerosData).map(([dni, p]) => `
+                <div class="item-lista" onclick="editarPasajero('${dni}')">
+                    <div>
+                        <strong>${p.nombre}</strong><br>
+                        <small>${dni} | ${calcularEdad(p.fechaNacimiento)} años</small>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarPasajero('${dni}')"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        };
+
+        window.editarPasajero = (dni) => {
+            const pasajero = pasajerosData[dni];
+            document.getElementById('pasajeroId').value = dni;
+            document.getElementById('dniPasajero').value = dni;
+            document.getElementById('nombrePasajero').value = pasajero.nombre;
+            document.getElementById('fechaNacimiento').value = pasajero.fechaNacimiento.split('/').reverse().join('-');
+        };
+
+        window.eliminarPasajero = (dni) => {
+            if (confirm('¿Eliminar pasajero permanentemente?')) remove(ref(database, `pasajeros/${dni}`));
+        };
+
+        window.guardarPasajero = async () => {
+            const dni = document.getElementById('dniPasajero').value.trim();
+            const nombre = document.getElementById('nombrePasajero').value.trim();
+            const fecha = document.getElementById('fechaNacimiento').value;
+
+            if (!dni || !nombre || !fecha) return alert('Complete todos los campos');
+
+            try {
+                const [anio, mes, dia] = fecha.split('-');
+                await set(ref(database, `pasajeros/${dni}`), {
+                    dni: dni,
+                    nombre: nombre,
+                    fechaNacimiento: `${dia}/${mes}/${anio}`,
+                    registradoPor: 'admin',
+                    timestamp: new Date().toISOString(),
+                    guardado: true
+                });
+                limpiarFormularioPasajero();
+                alert('Pasajero guardado exitosamente');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        };
+
+        window.limpiarFormularioPasajero = () => {
+            document.getElementById('pasajeroId').value = '';
+            document.getElementById('dniPasajero').value = '';
+            document.getElementById('nombrePasajero').value = '';
+            document.getElementById('fechaNacimiento').value = '';
+        };
+
+        // Sección Viajes
+        const cargarViajes = () => {
+            onValue(ref(database, 'viajes'), (snap) => {
+                viajesData = Object.entries(snap.val() || {});
+                aplicarFiltrosViajes();
+            });
+        };
+
+        const actualizarFiltroConductores = () => {
+            const select = document.getElementById('filtroConductor');
+            select.innerHTML = '<option value="">Todos los conductores</option>';
+            conductores.forEach(([id, cond]) => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = cond.nombre;
+                select.appendChild(option);
+            });
+        };
+
+        window.aplicarFiltrosViajes = () => {
+            const inicio = document.getElementById('filtroFechaInicio').value;
+            const fin = document.getElementById('filtroFechaFin').value;
+            const ruta = document.getElementById('filtroRuta').value;
+            const conductor = document.getElementById('filtroConductor').value;
+
+            const viajesFiltrados = viajesData.filter(([_, v]) => {
+                const fechaViaje = new Date(v.timestamp);
+                return (!inicio || fechaViaje >= new Date(inicio)) &&
+                       (!fin || fechaViaje <= new Date(fin + 'T23:59:59')) &&
+                       (!ruta || v.ruta === ruta) &&
+                       (!conductor || v.conductor === conductor);
+            });
+
+            actualizarListaViajes(viajesFiltrados);
+        };
+
+        const actualizarListaViajes = (viajes) => {
+            const lista = document.getElementById('listaViajes');
+            lista.innerHTML = viajes.reverse().map(([key, v]) => `
+                <div class="item-lista" onclick="mostrarDetalleViaje('${key}')">
+                    <div>
+                        <strong>${new Date(v.timestamp).toLocaleDateString('es-PE', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}</strong>
+                        <div>
+                            <small>${v.ruta} | ${v.pasajeros.length} pasajeros</small>
+                        </div>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarViaje('${key}')"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        };
+
+        window.mostrarDetalleViaje = async (key) => {
+            const viaje = (await get(ref(database, `viajes/${key}`))).val();
+            const conductor = viaje.conductor ? (await get(ref(database, `usuarios/${viaje.conductor}`))).val() : null;
+            const pasajeros = await Promise.all(viaje.pasajeros.map(async dni => {
+                const pasajero = (await get(ref(database, `pasajeros/${dni}`))).val();
+                return pasajero?.nombre || dni;
+            }));
+
+            document.getElementById('detalleViaje').innerHTML = `
+                <h3>Detalles del viaje</h3>
+                <p><strong>Fecha:</strong> ${new Date(viaje.timestamp).toLocaleString()}</p>
+                <p><strong>Ruta:</strong> ${viaje.ruta}</p>
+                <p><strong>Conductor:</strong> ${conductor?.nombre || 'No asignado'}</p>
+                <p><strong>Empresa:</strong> ${conductor?.empresa || 'No especificada'}</p>
+                <p><strong>Pasajeros:</strong></p>
+                <ul>${pasajeros.map(p => `<li>${p}</li>`).join('')}</ul>
+            `;
+        };
+
+        window.eliminarViaje = (key) => {
+            if (confirm('¿Eliminar viaje permanentemente?')) remove(ref(database, `viajes/${key}`));
+        };
+
+        const actualizarSelectEmpresas = () => {
+            const select = document.getElementById('empresaConductor');
+            select.innerHTML = '<option value="">Seleccionar empresa</option>';
+            empresas.forEach(([_, emp]) => {
+                const option = document.createElement('option');
+                option.value = emp.nombre;
+                option.textContent = emp.nombre;
+                select.appendChild(option);
+            });
+        };
+
+        window.logout = () => {
+            window.location.href = 'index.html';
+        };
+
+        // Inicialización
+        cargarEmpresas();
+        cargarConductores();
+        cargarPasajeros();
+        cargarViajes();
+    </script>
+
+    <footer>
+        <p>© 2025 Juanita Express Multiservice. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

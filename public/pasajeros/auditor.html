@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditor - Juanita Express</title>
+    <link rel="icon" type="image/png" href="/assets/img/jem.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2196F3;
+            --secondary: #4CAF50;
+            --error: #f44336;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-logo {
+            width: 250px;
+            display: block;
+            margin: 0 auto 25px;
+        }
+
+        .filtros-reportes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        input, select, button {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        .pagination button {
+            width: auto;
+            min-width: 40px;
+            padding: 8px 12px;
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .pagination button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .acciones-principales {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .export-button {
+            background: var(--secondary);
+            width: 180px;
+        }
+
+        .logout-button {
+            background: var(--error);
+            width: 140px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/assets/img/empresas/JUANITA.png" alt="Logo" class="header-logo">
+        <h1 style="text-align: center; margin-bottom: 30px;">
+            <i class="fas fa-chart-bar"></i> Panel de Auditoría
+        </h1>
+
+        <div class="filtros-reportes">
+            <input type="date" id="filtroInicio">
+            <input type="date" id="filtroFin">
+            <select id="filtroEmpresa">
+                <option value="">Todas las empresas</option>
+            </select>
+            <select id="filtroConductor">
+                <option value="">Todos los conductores</option>
+            </select>
+            <select id="filtroRuta">
+                <option value="">Todas las rutas</option>
+                <option value="MC">Moquegua a Cuajone</option>
+                <option value="CM">Cuajone a Moquegua</option>
+            </select>
+            <input type="text" id="filtroDNI" placeholder="Buscar DNI/CE">
+            <button onclick="cargarReportes()">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+        </div>
+
+        <div id="tablaReportes"></div>
+        
+        <div class="acciones-principales">
+            <button class="export-button" onclick="exportarExcel()">
+                <i class="fas fa-file-excel"></i> Exportar
+            </button>
+            <button class="logout-button" onclick="logout()">
+                <i class="fas fa-power-off"></i> Cerrar Sesión
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDO3pmjFE29L11wnroiKG5zzkJe-g5RAzg",
+            authDomain: "juanitaexpress-37e02.firebaseapp.com",
+            databaseURL: "https://juanitaexpress-37e02-default-rtdb.firebaseio.com",
+            projectId: "juanitaexpress-37e02",
+            storageBucket: "juanitaexpress-37e02.firebasestorage.app",
+            messagingSenderId: "299379190774",
+            appId: "1:299379190774:web:3f15f36c1d220f8a82b5d7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let viajesData = [];
+        let empresas = [];
+        let conductores = {};
+        let pasajeros = {};
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let viajesFiltrados = [];
+
+        const establecerFechasPredeterminadas = () => {
+            const hoy = new Date();
+            const primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+            const ultimoDia = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0);
+            
+            document.getElementById('filtroInicio').value = primerDia.toISOString().split('T')[0];
+            document.getElementById('filtroFin').value = ultimoDia.toISOString().split('T')[0];
+        };
+
+        const cargarDatosIniciales = async () => {
+            try {
+                const empresasSnapshot = await get(ref(database, 'empresas'));
+                empresas = empresasSnapshot.exists() ? Object.values(empresasSnapshot.val()) : [];
+                
+                const empresaSelect = document.getElementById('filtroEmpresa');
+                empresaSelect.innerHTML = '<option value="">Todas las empresas</option>';
+                empresas.forEach(empresa => {
+                    const option = document.createElement('option');
+                    option.value = empresa.nombre;
+                    option.textContent = empresa.nombre;
+                    empresaSelect.appendChild(option);
+                });
+
+                const usuariosSnapshot = await get(ref(database, 'usuarios'));
+                const usuarios = usuariosSnapshot.val() || {};
+                conductores = Object.entries(usuarios).reduce((acc, [id, usuario]) => {
+                    if (usuario.rol === 'conductor') acc[id] = usuario;
+                    return acc;
+                }, {});
+                
+                const conductorSelect = document.getElementById('filtroConductor');
+                conductorSelect.innerHTML = '<option value="">Todos los conductores</option>';
+                Object.entries(conductores).forEach(([id, conductor]) => {
+                    const option = document.createElement('option');
+                    option.value = id;
+                    option.textContent = conductor.nombre;
+                    conductorSelect.appendChild(option);
+                });
+
+                const pasajerosSnapshot = await get(ref(database, 'pasajeros'));
+                pasajeros = pasajerosSnapshot.val() || {};
+
+            } catch (error) {
+                console.error('Error cargando datos:', error);
+            }
+        };
+
+        const formatearFecha = (timestamp) => {
+            const fecha = new Date(timestamp);
+            return fecha.toLocaleDateString('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        };
+
+        const obtenerNombrePasajeros = (dnis) => {
+            return dnis.map(dni => pasajeros[dni]?.nombre || `DNI ${dni}`).join(', ');
+        };
+
+        const generarTabla = (viajes) => {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedViajes = viajes.slice(start, end);
+            
+            const tablaHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-calendar"></i> Fecha</th>
+                            <th><i class="fas fa-route"></i> Ruta</th>
+                            <th><i class="fas fa-users"></i> Pasajeros</th>
+                            <th><i class="fas fa-building"></i> Empresa</th>
+                            <th><i class="fas fa-user"></i> Conductor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${paginatedViajes.map(viaje => `
+                            <tr>
+                                <td>${formatearFecha(viaje.timestamp)}</td>
+                                <td>${viaje.ruta}</td>
+                                <td>${obtenerNombrePasajeros(viaje.pasajeros)}</td>
+                                <td>${viaje.empresa}</td>
+                                <td>${conductores[viaje.conductor]?.nombre || 'Desconocido'}</td>
+                            </tr>`
+                        ).join('')}
+                    </tbody>
+                </table>`;
+
+            const totalPages = Math.ceil(viajes.length / itemsPerPage);
+            let paginationHTML = '<div class="pagination">';
+            
+            if (currentPage > 1) {
+                paginationHTML += `<button onclick="cambiarPagina(${currentPage - 1})">Anterior</button>`;
+            }
+            
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <button class="${i === currentPage ? 'active' : ''}" 
+                            onclick="cambiarPagina(${i})">
+                        ${i}
+                    </button>`;
+            }
+            
+            if (currentPage < totalPages) {
+                paginationHTML += `<button onclick="cambiarPagina(${currentPage + 1})">Siguiente</button>`;
+            }
+            
+            paginationHTML += '</div>';
+            
+            document.getElementById('tablaReportes').innerHTML = viajes.length > 0 
+                ? tablaHTML + paginationHTML 
+                : '<p style="text-align:center;color:#666">No se encontraron viajes con los filtros seleccionados</p>';
+        };
+
+        window.cambiarPagina = (nuevaPagina) => {
+            currentPage = nuevaPagina;
+            generarTabla(viajesFiltrados);
+        };
+
+        window.cargarReportes = () => {
+            const inicio = document.getElementById('filtroInicio').value;
+            const fin = document.getElementById('filtroFin').value;
+            const empresa = document.getElementById('filtroEmpresa').value;
+            const conductor = document.getElementById('filtroConductor').value;
+            const ruta = document.getElementById('filtroRuta').value;
+            const dni = document.getElementById('filtroDNI').value.trim().toLowerCase();
+
+            viajesFiltrados = viajesData.filter(viaje => {
+                const fechaViaje = new Date(viaje.timestamp);
+                const matchFechaInicio = !inicio || fechaViaje >= new Date(inicio);
+                const matchFechaFin = !fin || fechaViaje <= new Date(fin + 'T23:59:59');
+                const matchEmpresa = !empresa || viaje.empresa === empresa;
+                const matchConductor = !conductor || viaje.conductor === conductor;
+                const matchRuta = !ruta || (
+                    (ruta === 'MC' && viaje.ruta === 'Moquegua a Cuajone') ||
+                    (ruta === 'CM' && viaje.ruta === 'Cuajone a Moquegua')
+                );
+                const matchDNI = !dni || viaje.pasajeros.some(p => p.toLowerCase().includes(dni));
+
+                return matchFechaInicio && matchFechaFin && matchEmpresa && 
+                       matchConductor && matchRuta && matchDNI;
+            });
+
+            currentPage = 1;
+            generarTabla(viajesFiltrados);
+        };
+
+        window.exportarExcel = () => {
+            const wsData = [
+                ['Fecha', 'Ruta', 'Pasajeros', 'Empresa', 'Conductor']
+            ];
+
+            viajesFiltrados.forEach(viaje => {
+                wsData.push([
+                    formatearFecha(viaje.timestamp),
+                    viaje.ruta,
+                    obtenerNombrePasajeros(viaje.pasajeros),
+                    viaje.empresa,
+                    conductores[viaje.conductor]?.nombre || 'Desconocido'
+                ]);
+            });
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            
+            ws['!cols'] = [
+                { wch: 20 }, 
+                { wch: 19 }, 
+                { wch: 50 }, 
+                { wch: 19 }, 
+                { wch: 25 }  
+            ];
+
+            XLSX.utils.book_append_sheet(wb, ws, "Reporte");
+            XLSX.writeFile(wb, `Auditoria_${new Date().toLocaleDateString('es-PE')}.xlsx`);
+        };
+
+        window.logout = () => {
+            window.location.href = 'index.html';
+        };
+
+        (async () => {
+            await cargarDatosIniciales();
+            establecerFechasPredeterminadas();
+            
+            onValue(ref(database, 'viajes'), (snapshot) => {
+                viajesData = Object.values(snapshot.val() || {});
+                viajesData.sort((a, b) => b.timestamp - a.timestamp);
+                cargarReportes();
+            });
+        })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</body>
+</html>
